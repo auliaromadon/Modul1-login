@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\ModelKontak;
 use Illuminate\Http\Request;
+use Session;
 
 class Login extends Controller
 {
@@ -13,15 +14,19 @@ class Login extends Controller
 
     public function cek(Request $req)
     {
-        $this->validasi($req,[
-            'username'=>'required',
-            'passsword'=>'required'
+        
+        $this->validate($req,[
+            'email'=>'required',
+            'password'=>'required'
         ]);
-        $proses=ModelKontak::where('username', $req->username)->where('password', $req->password)->first();
-        if(count($proses)>0){
+        // echo $req->email;
+        // echo $req->password;
+        $proses=ModelKontak::where('email', $req->email)->where('password', $req->password)->first();
+        if($proses){
             Session::put('id_kontak', $proses->id_kontak);
-            Session::put('username', $proses->username);
+            Session::put('email', $proses->email);
             Session::put('password',$proses->password);
+            Session::put('hak_akses', $proses->hak_akses);
             Session::put('nama', $proses->nama);
             Session::put('login_status', true);
             return redirect('/');

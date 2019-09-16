@@ -114,3 +114,5 @@ Route::resource('/penjualan', 'penjualan');
 Route::resource('/barang', 'barang');
 
 Route::resource('/pembelian', 'pembelian');
+
+Route::resource('/dash', 'dashboard@index');
